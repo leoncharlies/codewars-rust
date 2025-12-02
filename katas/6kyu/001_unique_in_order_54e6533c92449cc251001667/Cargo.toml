@@ -1,0 +1,6 @@
+[package]
+name = "kata_001_unique_in_order_54e6533c92449cc251001667"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

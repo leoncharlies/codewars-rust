@@ -1,0 +1,6 @@
+[package]
+name = "kata_002_so_many_permutations_5254ca2719453dcc0b00027d"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

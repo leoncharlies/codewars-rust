@@ -1,0 +1,6 @@
+[package]
+name = "kata_002_not_very_secure_526dbd6c8c0eb53254000110"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

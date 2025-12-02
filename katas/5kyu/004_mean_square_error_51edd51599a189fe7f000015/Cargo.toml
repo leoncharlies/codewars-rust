@@ -1,0 +1,6 @@
+[package]
+name = "kata_004_mean_square_error_51edd51599a189fe7f000015"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "kata_000_reverse_words_5259b20d6021e9e14c0010d4"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

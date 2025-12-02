@@ -1,0 +1,6 @@
+[package]
+name = "kata_003_interger_recreation_one_55aa075506463dac6600010d"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

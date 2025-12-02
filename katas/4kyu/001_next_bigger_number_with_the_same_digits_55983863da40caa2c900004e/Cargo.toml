@@ -1,0 +1,6 @@
+[package]
+name = "kata_001_next_bigger_number_with_the_same_digits_55983863da40caa2c900004e"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+members = [
+    "katas/4kyu/*",
+    "katas/5kyu/*",
+    "katas/6kyu/*",
+    "katas/7kyu/*",
+]
+exclude = []
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["somnus"]

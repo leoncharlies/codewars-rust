@@ -1,0 +1,6 @@
+[package]
+name = "kata_000_duplicate_encoder_54b42f9314d9229fd6000d9c"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
