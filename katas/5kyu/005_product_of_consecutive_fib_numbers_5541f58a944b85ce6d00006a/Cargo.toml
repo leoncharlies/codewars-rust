@@ -1,6 +1,0 @@
-[package]
-name = "kata_005_product_of_consecutive_fib_numbers_5541f58a944b85ce6d00006a"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]

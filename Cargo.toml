@@ -5,6 +5,7 @@ members = [
     "katas/5kyu/*",
     "katas/6kyu/*",
     "katas/7kyu/*",
+    "katas/8kyu/*"
 ]
 exclude = []
 

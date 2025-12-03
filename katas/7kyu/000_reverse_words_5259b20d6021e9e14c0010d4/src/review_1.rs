@@ -1,22 +1,15 @@
-//! Title: Reverse words
-//! Link: https://www.codewars.com/kata/5259b20d6021e9e14c0010d4
-//! Kata ID: 5259b20d6021e9e14c0010d4
-//! Rank: 7kyu
-//! Completed: 2025-12-02
+//! Review #1
+//! Date: 2025-12-03
 #![allow(dead_code)]
 
 fn reverse_words(str: &str) -> String {
-    // your code here\
-    let mut result = String::new();
-    for s in str.split(' ').collect::<Vec<&str>>() {
-        result.push_str(&s.chars().rev().collect::<String>());
-        result.push(' ');
-    }
-    result.pop();
-    result
+    str.to_string()
+        .split(' ')
+        .map(|sub| sub.chars().rev().collect())
+        .collect::<Vec<String>>()
+        .join(" ")
 }
 
-// Rust tests
 #[test]
 fn sample_test() {
     assert_eq!(
@@ -30,6 +23,3 @@ fn sample_test() {
         "elbuod  decaps  sdrow"
     );
 }
-
-#[cfg(test)]
-mod review_1;

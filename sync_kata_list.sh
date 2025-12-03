@@ -17,10 +17,20 @@ if [ -f "$KATA_INDEX" ]; then
     echo "   已备份旧索引"
 fi
 
-# 创建新索引
+# 创建新索引（保留旧的状态信息）
+# 先读取旧索引中的状态
+declare -A old_status
+if [ -f "${KATA_INDEX}.bak" ]; then
+    while IFS='|' read -r id name rank path date status; do
+        if [[ ! "$id" =~ ^# ]] && [ -n "$id" ]; then
+            old_status[$id]="${status:-completed}"
+        fi
+    done < "${KATA_INDEX}.bak"
+fi
+
 cat > "$KATA_INDEX" <<EOF
 # Codewars 题目索引
-# 格式: kata_id|题目名称|难度|路径|完成日期
+# 格式: kata_id|题目名称|难度|路径|完成日期|状态(completed/incomplete)
 # 此文件由 sync_kata_list.sh 自动维护
 
 EOF
@@ -35,7 +45,9 @@ for kata_dir in katas/*/*; do
         COMPLETED=$(grep "^//! Completed:" "$kata_dir/src/lib.rs" | sed 's/^\/\/! Completed: //')
         
         if [ -n "$KATA_ID" ] && [ -n "$TITLE" ] && [ -n "$RANK" ]; then
-            echo "$KATA_ID|$TITLE|$RANK|$kata_dir|$COMPLETED" >> "$KATA_INDEX"
+            # 获取状态（如果存在旧记录则保留，否则默认为completed）
+            STATUS="${old_status[$KATA_ID]:-completed}"
+            echo "$KATA_ID|$TITLE|$RANK|$kata_dir|$COMPLETED|$STATUS" >> "$KATA_INDEX"
             TOTAL_COUNT=$((TOTAL_COUNT + 1))
         fi
     fi
@@ -48,13 +60,22 @@ echo "2. 收集统计信息..."
 
 declare -A rank_count
 TOTAL_REVIEWS=0
+COMPLETED_COUNT=0
+INCOMPLETE_COUNT=0
 
-while IFS='|' read -r id name rank path date; do
+while IFS='|' read -r id name rank path date status; do
     if [[ "$id" =~ ^# ]] || [ -z "$id" ]; then
         continue
     fi
     
     rank_count[$rank]=$((${rank_count[$rank]:-0} + 1))
+    
+    # 统计状态
+    if [ "$status" == "incomplete" ]; then
+        INCOMPLETE_COUNT=$((INCOMPLETE_COUNT + 1))
+    else
+        COMPLETED_COUNT=$((COMPLETED_COUNT + 1))
+    fi
     
     # 统计复习次数
     if [ -d "$path/src" ]; then
@@ -74,6 +95,8 @@ cat > "$OUTPUT_FILE" <<EOF
 ## 📊 统计概览
 
 - **总题目数**: $TOTAL_COUNT
+- **已完成**: $COMPLETED_COUNT ✅
+- **未完成**: $INCOMPLETE_COUNT ⏸️
 - **总复习次数**: $TOTAL_REVIEWS
 EOF
 
@@ -120,9 +143,14 @@ for kyu in 1kyu 2kyu 3kyu 4kyu 5kyu 6kyu 7kyu 8kyu; do
     echo "" >> "$OUTPUT_FILE"
     
     item_num=1
-    while IFS='|' read -r id name rank path date; do
+    while IFS='|' read -r id name rank path date status; do
         if [[ "$id" =~ ^# ]] || [ -z "$id" ] || [ "$rank" != "$kyu" ]; then
             continue
+        fi
+        
+        # 兼容旧格式
+        if [ -z "$status" ]; then
+            status="completed"
         fi
         
         # 检查复习次数
@@ -135,10 +163,22 @@ for kyu in 1kyu 2kyu 3kyu 4kyu 5kyu 6kyu 7kyu 8kyu; do
             fi
         fi
         
-        echo "#### $item_num. $name$review_marker" >> "$OUTPUT_FILE"
+        # 状态标记
+        status_marker=""
+        if [ "$status" == "incomplete" ]; then
+            status_marker=" ⏸️"
+        fi
+        
+        echo "#### $item_num. $name$review_marker$status_marker" >> "$OUTPUT_FILE"
         echo "- **Kata ID**: $id" >> "$OUTPUT_FILE"
         echo "- **链接**: https://www.codewars.com/kata/$id" >> "$OUTPUT_FILE"
-        echo "- **完成日期**: $date" >> "$OUTPUT_FILE"
+        if [ "$status" == "completed" ]; then
+            echo "- **完成日期**: $date" >> "$OUTPUT_FILE"
+            echo "- **状态**: ✅ 已完成" >> "$OUTPUT_FILE"
+        else
+            echo "- **创建日期**: $date" >> "$OUTPUT_FILE"
+            echo "- **状态**: ⏸️ 未完成" >> "$OUTPUT_FILE"
+        fi
         echo "- **路径**: \`$path\`" >> "$OUTPUT_FILE"
         echo "- **复习次数**: $review_count" >> "$OUTPUT_FILE"
         
@@ -188,7 +228,7 @@ MAX_REVIEWS=0
 MAX_REVIEW_KATA=""
 REVIEWED_COUNT=0
 
-while IFS='|' read -r id name rank path date; do
+while IFS='|' read -r id name rank path date status; do
     if [[ "$id" =~ ^# ]] || [ -z "$id" ]; then
         continue
     fi
@@ -223,9 +263,29 @@ cat >> "$OUTPUT_FILE" <<EOF
 ./add_kata.sh <kata_id>
 \`\`\`
 
+### 添加未完成题目
+\`\`\`bash
+./add_kata.sh <kata_id> --incomplete
+\`\`\`
+
 ### 添加复习版本
 \`\`\`bash
 ./add_kata.sh <kata_id> --review
+\`\`\`
+
+### 标记题目为已完成
+\`\`\`bash
+./manage_kata.sh complete <kata_id>
+\`\`\`
+
+### 标记题目为未完成
+\`\`\`bash
+./manage_kata.sh incomplete <kata_id>
+\`\`\`
+
+### 查看未完成题目
+\`\`\`bash
+./manage_kata.sh pending
 \`\`\`
 
 ### 查看统计

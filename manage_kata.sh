@@ -15,6 +15,9 @@ show_usage() {
     echo "  ./manage_kata.sh info <kata_id>     - 显示题目详细信息"
     echo "  ./manage_kata.sh index              - 显示题目索引"
     echo "  ./manage_kata.sh check <kata_id>    - 快速检查是否做过某题"
+    echo "  ./manage_kata.sh complete <kata_id> - 标记题目为已完成"
+    echo "  ./manage_kata.sh incomplete <kata_id> - 标记题目为未完成"
+    echo "  ./manage_kata.sh pending            - 列出所有未完成的题目"
     echo ""
     echo "示例:"
     echo "  ./manage_kata.sh list 5kyu"
@@ -22,6 +25,9 @@ show_usage() {
     echo "  ./manage_kata.sh stats"
     echo "  ./manage_kata.sh info 5541f58a944b85ce6d00006a"
     echo "  ./manage_kata.sh check 5541f58a944b85ce6d00006a"
+    echo "  ./manage_kata.sh complete 5541f58a944b85ce6d00006a"
+    echo "  ./manage_kata.sh incomplete 5541f58a944b85ce6d00006a"
+    echo "  ./manage_kata.sh pending"
 }
 
 list_katas() {
@@ -244,6 +250,96 @@ check_kata() {
     fi
 }
 
+mark_status() {
+    local kata_id="$1"
+    local new_status="$2"
+    local KATA_INDEX=".kata_index"
+    
+    if [ -z "$kata_id" ]; then
+        echo "错误: 请提供 kata ID"
+        exit 1
+    fi
+    
+    if [ ! -f "$KATA_INDEX" ]; then
+        echo "❌ 索引文件不存在"
+        exit 1
+    fi
+    
+    # 检查题目是否存在
+    local entry=$(grep "^${kata_id}|" "$KATA_INDEX" 2>/dev/null || true)
+    
+    if [ -z "$entry" ]; then
+        echo "❌ 未找到 kata ID: $kata_id"
+        exit 1
+    fi
+    
+    # 备份索引
+    cp "$KATA_INDEX" "${KATA_INDEX}.bak"
+    
+    # 更新状态（兼容旧格式和新格式）
+    if echo "$entry" | grep -q '|.*|.*|.*|.*|'; then
+        # 新格式：包含状态字段
+        sed -i "s/^${kata_id}|\(.*\)|\(.*\)|\(.*\)|\(.*\)|.*/${kata_id}|\1|\2|\3|\4|${new_status}/" "$KATA_INDEX"
+    else
+        # 旧格式：没有状态字段，添加状态
+        sed -i "s/^${kata_id}|\(.*\)/${kata_id}|\1|${new_status}/" "$KATA_INDEX"
+    fi
+    
+    # 获取题目名称
+    local kata_name=$(echo "$entry" | cut -d'|' -f2)
+    
+    if [ "$new_status" == "completed" ]; then
+        echo "✅ 已标记为完成: $kata_name"
+    else
+        echo "⏸️  已标记为未完成: $kata_name"
+    fi
+    
+    # 自动同步题目列表
+    if [ -x "./sync_kata_list.sh" ]; then
+        echo ""
+        echo "同步题目列表..."
+        ./sync_kata_list.sh > /dev/null 2>&1 && echo "✓ KATA_LIST.md 已更新" || echo "⚠ 同步失败，请手动运行 ./sync_kata_list.sh"
+    fi
+}
+
+list_pending() {
+    local KATA_INDEX=".kata_index"
+    
+    if [ ! -f "$KATA_INDEX" ]; then
+        echo "❌ 索引文件不存在"
+        exit 1
+    fi
+    
+    echo "=== 未完成的题目 ==="
+    echo ""
+    
+    local found=0
+    while IFS='|' read -r id name rank path date status; do
+        if [[ "$id" =~ ^# ]] || [ -z "$id" ]; then
+            continue
+        fi
+        
+        # 兼容旧格式（没有状态字段的默认为completed）
+        if [ -z "$status" ]; then
+            status="completed"
+        fi
+        
+        if [ "$status" == "incomplete" ]; then
+            echo "  [$rank] $name"
+            echo "      ID: $id"
+            echo "      路径: $path"
+            echo ""
+            found=$((found + 1))
+        fi
+    done < "$KATA_INDEX"
+    
+    if [ "$found" -eq 0 ]; then
+        echo "🎉 所有题目都已完成！"
+    else
+        echo "共 $found 个未完成题目"
+    fi
+}
+
 # 主逻辑
 COMMAND="${1:-help}"
 
@@ -265,6 +361,15 @@ case "$COMMAND" in
         ;;
     check)
         check_kata "$2"
+        ;;
+    complete)
+        mark_status "$2" "completed"
+        ;;
+    incomplete)
+        mark_status "$2" "incomplete"
+        ;;
+    pending)
+        list_pending
         ;;
     help|--help|-h)
         show_usage

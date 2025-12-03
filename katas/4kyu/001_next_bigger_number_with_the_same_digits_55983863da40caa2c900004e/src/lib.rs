@@ -7,6 +7,7 @@
 //! TODO: 在这里写你的解法
 //!
 //! 把 Codewars 的测试用例复制到下面 tests 模块里即可（推荐保留原样,便于以后复习）
+#![allow(dead_code)]
 
 fn next_bigger_number(n: u64) -> Option<u64> {
     let mut v = n.to_string().bytes().collect::<Vec<_>>();

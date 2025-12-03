@@ -1,0 +1,6 @@
+[package]
+name = "kata_002_playing_with_digits_5552101f47fc5178b1000050"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

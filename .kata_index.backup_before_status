@@ -1,0 +1,21 @@
+# Codewars 题目索引
+# 格式: kata_id|题目名称|难度|路径|完成日期
+# 此文件由 sync_kata_list.sh 自动维护
+
+551f23362ff852e2ab000037|pyramid slide down|4kyu|katas/4kyu/000_pyramid_slide_down_551f23362ff852e2ab000037|2025-12-01
+55983863da40caa2c900004e|next bigger number with the same digits|4kyu|katas/4kyu/001_next_bigger_number_with_the_same_digits_55983863da40caa2c900004e|2025-12-01
+5254ca2719453dcc0b00027d|so many permutations!|4kyu|katas/4kyu/002_so_many_permutations_5254ca2719453dcc0b00027d|2025-12-02
+52f787eb172a8b4ae1000a34|Number of trailing zeros of N!|5kyu|katas/5kyu/000_number_of_trailing_zeros_of_n_52f787eb172a8b4ae1000a34|2025-12-01
+526989a41034285187000de4|Count IP Addresses|5kyu|katas/5kyu/001_count_ip_addresses_526989a41034285187000de4|2025-12-01
+526dbd6c8c0eb53254000110|Not very secure|5kyu|katas/5kyu/002_not_very_secure_526dbd6c8c0eb53254000110|2025-12-01
+55aa075506463dac6600010d|interger:recreation one|5kyu|katas/5kyu/003_interger_recreation_one_55aa075506463dac6600010d|2025-12-02
+51edd51599a189fe7f000015|mean square error|5kyu|katas/5kyu/004_mean_square_error_51edd51599a189fe7f000015|2025-12-02
+55e61967663140aafb0001d6|Primes in the Last Digits of Huge Numbers|5kyu|katas/5kyu/005_primes_in_the_last_digits_of_huge_numbers_55e61967663140aafb0001d6|2025-12-03
+64cf5ba625e2160051ad8b71|Dependable Jobs Schedule|5kyu|katas/5kyu/006_dependable_jobs_schedule_64cf5ba625e2160051ad8b71|2025-12-03
+54b42f9314d9229fd6000d9c|Duplicate Encoder|6kyu|katas/6kyu/000_duplicate_encoder_54b42f9314d9229fd6000d9c|2025-12-02
+54e6533c92449cc251001667|Unique In Order|6kyu|katas/6kyu/001_unique_in_order_54e6533c92449cc251001667|2025-12-02
+5552101f47fc5178b1000050|Playing with digits|6kyu|katas/6kyu/002_playing_with_digits_5552101f47fc5178b1000050|2025-12-03
+556deca17c58da83c00002db|Tribonacci Sequence|6kyu|katas/6kyu/003_tribonacci_sequence_556deca17c58da83c00002db|2025-12-03
+5259b20d6021e9e14c0010d4|Reverse words|7kyu|katas/7kyu/000_reverse_words_5259b20d6021e9e14c0010d4|2025-12-02
+55f8a9c06c018a0d6e000132|Regex validate PIN code|7kyu|katas/7kyu/001_regex_validate_pin_code_55f8a9c06c018a0d6e000132|2025-12-03
+57eadb7ecd143f4c9c0000a3|Abbreviate a Two Word Name|8kyu|katas/8kyu/000_abbreviate_a_two_word_name_57eadb7ecd143f4c9c0000a3|2025-12-03

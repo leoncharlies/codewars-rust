@@ -1,0 +1,6 @@
+[package]
+name = "kata_003_tribonacci_sequence_556deca17c58da83c00002db"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

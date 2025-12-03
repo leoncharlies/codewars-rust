@@ -1,0 +1,6 @@
+[package]
+name = "kata_005_primes_in_the_last_digits_of_huge_numbers_55e61967663140aafb0001d6"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

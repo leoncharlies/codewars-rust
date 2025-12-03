@@ -1,0 +1,6 @@
+[package]
+name = "kata_000_abbreviate_a_two_word_name_57eadb7ecd143f4c9c0000a3"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -7,6 +7,7 @@
 //! TODO: 在这里写你的解法
 //!
 //! 把 Codewars 的测试用例复制到下面 tests 模块里即可（推荐保留原样，便于以后复习）
+#![allow(dead_code)]
 
 fn ips_between(start: &str, end: &str) -> u32 {
     fn convert2num(input: &str) -> u32 {

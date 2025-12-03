@@ -7,16 +7,23 @@ set -e
 
 KATA_ID="$1"
 IS_REVIEW=false
+IS_INCOMPLETE=false
 KATA_INDEX=".kata_index"
 
-if [ "$2" == "--review" ]; then
-    IS_REVIEW=true
-fi
+# 解析参数
+for arg in "$@"; do
+    if [ "$arg" == "--review" ]; then
+        IS_REVIEW=true
+    elif [ "$arg" == "--incomplete" ]; then
+        IS_INCOMPLETE=true
+    fi
+done
 
 if [ -z "$KATA_ID" ]; then
-    echo "用法: ./add_kata.sh <kata_id> [--review]"
+    echo "用法: ./add_kata.sh <kata_id> [--review] [--incomplete]"
     echo "示例: ./add_kata.sh 5541f58a944b85ce6d00006a"
     echo "添加复习: ./add_kata.sh 5541f58a944b85ce6d00006a --review"
+    echo "添加未完成题目: ./add_kata.sh 5541f58a944b85ce6d00006a --incomplete"
     exit 1
 fi
 
@@ -24,7 +31,7 @@ fi
 if [ ! -f "$KATA_INDEX" ]; then
     cat > "$KATA_INDEX" <<EOF
 # Codewars 题目索引
-# 格式: kata_id|题目名称|难度|路径|完成日期
+# 格式: kata_id|题目名称|难度|路径|完成日期|状态(completed/incomplete)
 # 此文件由 add_kata.sh 自动维护
 
 EOF
@@ -113,6 +120,7 @@ if [ "$IS_REVIEW" == "true" ]; then
     cat > "$REVIEW_FILE" <<EOF
 //! Review #$REVIEW_NUM
 //! Date: $(date +%Y-%m-%d)
+#![allow(dead_code)]
 
 pub fn solution() {
     unimplemented!()
@@ -185,6 +193,7 @@ EOF
 //! Kata ID: $KATA_ID
 //! Rank: $RANK
 //! Completed: $(date +%Y-%m-%d)
+#![allow(dead_code)]
 
 pub fn solution() {
     unimplemented!()
@@ -205,8 +214,12 @@ EOF
     
     # 更新索引文件
     COMPLETED_DATE=$(date +%Y-%m-%d)
-    echo "$KATA_ID|$KATA_NAME|$RANK|$KATA_DIR|$COMPLETED_DATE" >> "$KATA_INDEX"
-    echo "  ✓ 已添加到题目索引"
+    STATUS="completed"
+    if [ "$IS_INCOMPLETE" == "true" ]; then
+        STATUS="incomplete"
+    fi
+    echo "$KATA_ID|$KATA_NAME|$RANK|$KATA_DIR|$COMPLETED_DATE|$STATUS" >> "$KATA_INDEX"
+    echo "  ✓ 已添加到题目索引 (状态: $STATUS)"
     
     # 自动同步题目列表
     if [ -x "./sync_kata_list.sh" ]; then

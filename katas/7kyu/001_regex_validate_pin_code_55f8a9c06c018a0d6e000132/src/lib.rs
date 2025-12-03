@@ -3,6 +3,7 @@
 //! Kata ID: 55f8a9c06c018a0d6e000132
 //! Rank: 7kyu
 //! Completed: 2025-12-03
+#![allow(dead_code)]
 
 fn validate_pin(pin: &str) -> bool {
     ((pin.len() == 4) || (pin.len() == 6)) && pin.chars().all(|c| c.is_digit(10))

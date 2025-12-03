@@ -3,7 +3,7 @@
 //! Kata ID: 54e6533c92449cc251001667
 //! Rank: 6kyu
 //! Completed: 2025-12-02
-
+#![allow(dead_code)]
 fn unique_in_order<T>(sequence: T) -> Vec<T::Item>
 where
     T: std::iter::IntoIterator,

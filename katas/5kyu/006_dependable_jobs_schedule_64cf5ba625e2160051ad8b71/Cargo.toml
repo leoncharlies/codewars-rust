@@ -1,0 +1,6 @@
+[package]
+name = "kata_006_dependable_jobs_schedule_64cf5ba625e2160051ad8b71"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -3,6 +3,8 @@
 //! Kata ID: 54b42f9314d9229fd6000d9c
 //! Rank: 6kyu
 //! Completed: 2025-12-02
+#![allow(dead_code)]
+
 use std::collections::HashMap;
 fn duplicate_encode(word: &str) -> String {
     let mut hm: HashMap<char, u32> = HashMap::new();
