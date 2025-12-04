@@ -1,0 +1,6 @@
+[package]
+name = "kata_007_fateful_findings_67330f514a2d47c019c67340"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

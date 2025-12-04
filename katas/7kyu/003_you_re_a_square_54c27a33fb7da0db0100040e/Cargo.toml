@@ -1,0 +1,6 @@
+[package]
+name = "kata_003_you_re_a_square_54c27a33fb7da0db0100040e"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

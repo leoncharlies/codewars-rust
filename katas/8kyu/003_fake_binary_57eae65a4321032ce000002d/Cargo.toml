@@ -1,0 +1,6 @@
+[package]
+name = "kata_003_fake_binary_57eae65a4321032ce000002d"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

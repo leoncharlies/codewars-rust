@@ -1,0 +1,6 @@
+[package]
+name = "kata_004_array_diff_523f5d21c841566fde000009"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

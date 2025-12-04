@@ -1,0 +1,6 @@
+[package]
+name = "kata_001_square_n_sum_515e271a311df0350d00000f"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

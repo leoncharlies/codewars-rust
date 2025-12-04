@@ -1,0 +1,6 @@
+[package]
+name = "kata_002_sum_of_positive_5715eaedb436cf5606000381"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "kata_004_counting_sheep_54edbc7200b811e956000556"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

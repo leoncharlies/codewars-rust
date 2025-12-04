@@ -1,0 +1,6 @@
+[package]
+name = "kata_005_take_a_ten_minutes_walk_54da539698b8a2ad76000228"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

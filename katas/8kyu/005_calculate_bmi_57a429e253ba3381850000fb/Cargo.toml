@@ -1,0 +1,6 @@
+[package]
+name = "kata_005_calculate_bmi_57a429e253ba3381850000fb"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

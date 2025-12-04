@@ -1,0 +1,6 @@
+[package]
+name = "kata_002_string_ends_with_51f2d1cafc9c0f745c00037d"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
