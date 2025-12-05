@@ -9,8 +9,19 @@
 //! 把 Codewars 的测试用例复制到下面 tests 模块里即可（推荐保留原样，便于以后复习）
 #![allow(dead_code)]
 
+// vec![10],
+// vec![10, 20],
+// vec![10, 10, 20],
+// vec![10, 90, 10, 20],
+// 动态规划问题，从底层向上，逐层算出最大结果
 fn longest_slide_down(pyramid: &[Vec<u16>]) -> u16 {
-    0
+    let mut dp = pyramid.last().unwrap().clone();
+    for i in (0..pyramid.len() - 1).rev() {
+        for j in 0..pyramid[i].len() {
+            dp[j] = pyramid[i][j] + dp[j].max(dp[j + 1]);
+        }
+    }
+    dp[0]
 }
 
 #[cfg(test)]
