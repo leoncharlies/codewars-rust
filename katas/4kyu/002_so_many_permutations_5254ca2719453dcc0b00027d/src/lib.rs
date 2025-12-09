@@ -9,8 +9,43 @@
 //! 把 Codewars 的测试用例复制到下面 tests 模块里即可（推荐保留原样,便于以后复习）
 #![allow(dead_code)]
 
-pub fn permutations(s: &str) -> Vec<String> {
-    todo!("Your code here")
+fn permutations(s: &str) -> Vec<String> {
+    let mut chars: Vec<char> = s.chars().collect();
+    chars.sort(); // 先排序，方便去重
+
+    let mut used = vec![false; chars.len()];
+    let mut path = Vec::new();
+    let mut res = Vec::new();
+
+    backtrack(&chars, &mut used, &mut path, &mut res);
+
+    res
+}
+
+fn backtrack(chars: &Vec<char>, used: &mut Vec<bool>, path: &mut Vec<char>, res: &mut Vec<String>) {
+    if path.len() == chars.len() {
+        res.push(path.iter().collect());
+        return;
+    }
+
+    for i in 0..chars.len() {
+        if used[i] {
+            continue;
+        }
+
+        // 去重关键点：相同字符，只能使用第一个还没被用过的
+        if i > 0 && chars[i] == chars[i - 1] && !used[i - 1] {
+            continue;
+        }
+
+        used[i] = true;
+        path.push(chars[i]);
+
+        backtrack(chars, used, path, res);
+
+        path.pop();
+        used[i] = false;
+    }
 }
 
 #[cfg(test)]

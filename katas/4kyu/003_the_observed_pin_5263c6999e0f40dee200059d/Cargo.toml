@@ -1,0 +1,7 @@
+[package]
+name = "kata_003_the_observed_pin_5263c6999e0f40dee200059d"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+itertools = "0.14.0"

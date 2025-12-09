@@ -5,9 +5,9 @@ members = [
     "katas/5kyu/*",
     "katas/6kyu/*",
     "katas/7kyu/*",
-    "katas/8kyu/*"
+    "katas/8kyu/*",
+    "scratch"
 ]
-exclude = []
 
 [workspace.package]
 version = "0.1.0"

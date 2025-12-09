@@ -1,0 +1,6 @@
+[package]
+name = "kata_004_recover_a_secret_string_from_random_triplets_53f40dff5f9d31b813000774"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
