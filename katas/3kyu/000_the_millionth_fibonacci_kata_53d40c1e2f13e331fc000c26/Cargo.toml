@@ -1,0 +1,8 @@
+[package]
+name = "kata_000_the_millionth_fibonacci_kata_53d40c1e2f13e331fc000c26"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+num="0.4"

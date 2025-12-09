@@ -1,0 +1,7 @@
+[package]
+name = "kata_005_binary_multiple_of_3_54de279df565808f8b00126a"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+regex = "1.12.2"
